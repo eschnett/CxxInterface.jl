@@ -1,0 +1,8 @@
+name = "CxxInterface"
+uuid = "62027b0a-52e9-423e-ab47-e314c210e772"
+authors = ["Erik Schnetter <schnetter@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+ComputedFieldTypes = "459fdd68-db75-56b8-8c15-d717a790f88e"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
