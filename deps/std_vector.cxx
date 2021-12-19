@@ -75,142 +75,6 @@ extern "C" void std_vector_int8_t_setindex_(
 
 
 /*
-function StdVector_new(type::Type{UInt8})
-    res = ccall("std_vector_uint8_t_new", Ptr{Nothing}, (Nothing,), nothing)
-    return StdVector{UInt8}(res)::Main.StdVectors.StdVector{UInt8}
-end
-*/
-extern "C" std::vector<uint8_t> * std_vector_uint8_t_new(
-    std::tuple<> type
-) {
-    return new std::vector<uint8_t>;
-}
-
-
-/*
-function StdVector_delete(vec::Main.StdVectors.StdVector{UInt8})
-    res = ccall("std_vector_uint8_t_delete", Nothing, (Ptr{Nothing},), vec)
-    return res::Nothing
-end
-*/
-extern "C" void std_vector_uint8_t_delete(
-    std::vector<uint8_t> * restrict vec
-) {
-    delete vec;
-}
-
-
-/*
-function Base.length(vec::Main.StdVectors.StdVector{UInt8})
-    res = ccall("std_vector_uint8_t_length", UInt64, (Ptr{Nothing},), vec)
-    return convert(Int, res)::Int64
-end
-*/
-extern "C" std::size_t std_vector_uint8_t_length(
-    const std::vector<uint8_t> * restrict vec
-) {
-    return vec->size();
-}
-
-
-/*
-function Base.getindex(vec::Main.StdVectors.StdVector{UInt8}, idx::Integer)
-    res = ccall("std_vector_uint8_t_getindex", UInt8, (Ptr{Nothing}, UInt64), vec, idx)
-    return res::UInt8
-end
-*/
-extern "C" uint8_t std_vector_uint8_t_getindex(
-    const std::vector<uint8_t> * restrict vec,
-    std::size_t idx
-) {
-    return (*vec)[i];
-}
-
-
-/*
-function Base.setindex!(vec::Main.StdVectors.StdVector{UInt8}, elt::UInt8, idx::Integer)
-    res = ccall("std_vector_uint8_t_setindex_", Nothing, (Ptr{Nothing}, UInt8, UInt64), vec, elt, idx)
-    return res::Nothing
-end
-*/
-extern "C" void std_vector_uint8_t_setindex_(
-    std::vector<uint8_t> * restrict vec,
-    const uint8_t& elt,
-    std::size_t idx
-) {
-    (*vec)[i] = elt;
-}
-
-
-/*
-function StdVector_new(type::Type{Int8})
-    res = ccall("std_vector_int8_t_new", Ptr{Nothing}, (Nothing,), nothing)
-    return StdVector{Int8}(res)::Main.StdVectors.StdVector{Int8}
-end
-*/
-extern "C" std::vector<int8_t> * std_vector_int8_t_new(
-    std::tuple<> type
-) {
-    return new std::vector<int8_t>;
-}
-
-
-/*
-function StdVector_delete(vec::Main.StdVectors.StdVector{Int8})
-    res = ccall("std_vector_int8_t_delete", Nothing, (Ptr{Nothing},), vec)
-    return res::Nothing
-end
-*/
-extern "C" void std_vector_int8_t_delete(
-    std::vector<int8_t> * restrict vec
-) {
-    delete vec;
-}
-
-
-/*
-function Base.length(vec::Main.StdVectors.StdVector{Int8})
-    res = ccall("std_vector_int8_t_length", UInt64, (Ptr{Nothing},), vec)
-    return convert(Int, res)::Int64
-end
-*/
-extern "C" std::size_t std_vector_int8_t_length(
-    const std::vector<int8_t> * restrict vec
-) {
-    return vec->size();
-}
-
-
-/*
-function Base.getindex(vec::Main.StdVectors.StdVector{Int8}, idx::Integer)
-    res = ccall("std_vector_int8_t_getindex", Int8, (Ptr{Nothing}, UInt64), vec, idx)
-    return res::Int8
-end
-*/
-extern "C" int8_t std_vector_int8_t_getindex(
-    const std::vector<int8_t> * restrict vec,
-    std::size_t idx
-) {
-    return (*vec)[i];
-}
-
-
-/*
-function Base.setindex!(vec::Main.StdVectors.StdVector{Int8}, elt::Int8, idx::Integer)
-    res = ccall("std_vector_int8_t_setindex_", Nothing, (Ptr{Nothing}, Int8, UInt64), vec, elt, idx)
-    return res::Nothing
-end
-*/
-extern "C" void std_vector_int8_t_setindex_(
-    std::vector<int8_t> * restrict vec,
-    const int8_t& elt,
-    std::size_t idx
-) {
-    (*vec)[i] = elt;
-}
-
-
-/*
 function StdVector_new(type::Type{Int16})
     res = ccall("std_vector_int16_t_new", Ptr{Nothing}, (Nothing,), nothing)
     return StdVector{Int16}(res)::Main.StdVectors.StdVector{Int16}
@@ -340,6 +204,74 @@ end
 extern "C" void std_vector_int32_t_setindex_(
     std::vector<int32_t> * restrict vec,
     const int32_t& elt,
+    std::size_t idx
+) {
+    (*vec)[i] = elt;
+}
+
+
+/*
+function StdVector_new(type::Type{Int64})
+    res = ccall("std_vector_int64_t_new", Ptr{Nothing}, (Nothing,), nothing)
+    return StdVector{Int64}(res)::Main.StdVectors.StdVector{Int64}
+end
+*/
+extern "C" std::vector<int64_t> * std_vector_int64_t_new(
+    std::tuple<> type
+) {
+    return new std::vector<int64_t>;
+}
+
+
+/*
+function StdVector_delete(vec::Main.StdVectors.StdVector{Int64})
+    res = ccall("std_vector_int64_t_delete", Nothing, (Ptr{Nothing},), vec)
+    return res::Nothing
+end
+*/
+extern "C" void std_vector_int64_t_delete(
+    std::vector<int64_t> * restrict vec
+) {
+    delete vec;
+}
+
+
+/*
+function Base.length(vec::Main.StdVectors.StdVector{Int64})
+    res = ccall("std_vector_int64_t_length", UInt64, (Ptr{Nothing},), vec)
+    return convert(Int, res)::Int64
+end
+*/
+extern "C" std::size_t std_vector_int64_t_length(
+    const std::vector<int64_t> * restrict vec
+) {
+    return vec->size();
+}
+
+
+/*
+function Base.getindex(vec::Main.StdVectors.StdVector{Int64}, idx::Integer)
+    res = ccall("std_vector_int64_t_getindex", Int64, (Ptr{Nothing}, UInt64), vec, idx)
+    return res::Int64
+end
+*/
+extern "C" int64_t std_vector_int64_t_getindex(
+    const std::vector<int64_t> * restrict vec,
+    std::size_t idx
+) {
+    return (*vec)[i];
+}
+
+
+/*
+function Base.setindex!(vec::Main.StdVectors.StdVector{Int64}, elt::Int64, idx::Integer)
+    res = ccall("std_vector_int64_t_setindex_", Nothing, (Ptr{Nothing}, Int64, UInt64), vec, elt, idx)
+    return res::Nothing
+end
+*/
+extern "C" void std_vector_int64_t_setindex_(
+    std::vector<int64_t> * restrict vec,
+    const int64_t& elt,
     std::size_t idx
 ) {
     (*vec)[i] = elt;
@@ -612,6 +544,74 @@ end
 extern "C" void std_vector_uint32_t_setindex_(
     std::vector<uint32_t> * restrict vec,
     const uint32_t& elt,
+    std::size_t idx
+) {
+    (*vec)[i] = elt;
+}
+
+
+/*
+function StdVector_new(type::Type{UInt64})
+    res = ccall("std_vector_uint64_t_new", Ptr{Nothing}, (Nothing,), nothing)
+    return StdVector{UInt64}(res)::Main.StdVectors.StdVector{UInt64}
+end
+*/
+extern "C" std::vector<uint64_t> * std_vector_uint64_t_new(
+    std::tuple<> type
+) {
+    return new std::vector<uint64_t>;
+}
+
+
+/*
+function StdVector_delete(vec::Main.StdVectors.StdVector{UInt64})
+    res = ccall("std_vector_uint64_t_delete", Nothing, (Ptr{Nothing},), vec)
+    return res::Nothing
+end
+*/
+extern "C" void std_vector_uint64_t_delete(
+    std::vector<uint64_t> * restrict vec
+) {
+    delete vec;
+}
+
+
+/*
+function Base.length(vec::Main.StdVectors.StdVector{UInt64})
+    res = ccall("std_vector_uint64_t_length", UInt64, (Ptr{Nothing},), vec)
+    return convert(Int, res)::Int64
+end
+*/
+extern "C" std::size_t std_vector_uint64_t_length(
+    const std::vector<uint64_t> * restrict vec
+) {
+    return vec->size();
+}
+
+
+/*
+function Base.getindex(vec::Main.StdVectors.StdVector{UInt64}, idx::Integer)
+    res = ccall("std_vector_uint64_t_getindex", UInt64, (Ptr{Nothing}, UInt64), vec, idx)
+    return res::UInt64
+end
+*/
+extern "C" uint64_t std_vector_uint64_t_getindex(
+    const std::vector<uint64_t> * restrict vec,
+    std::size_t idx
+) {
+    return (*vec)[i];
+}
+
+
+/*
+function Base.setindex!(vec::Main.StdVectors.StdVector{UInt64}, elt::UInt64, idx::Integer)
+    res = ccall("std_vector_uint64_t_setindex_", Nothing, (Ptr{Nothing}, UInt64, UInt64), vec, elt, idx)
+    return res::Nothing
+end
+*/
+extern "C" void std_vector_uint64_t_setindex_(
+    std::vector<uint64_t> * restrict vec,
+    const uint64_t& elt,
     std::size_t idx
 ) {
     (*vec)[i] = elt;
