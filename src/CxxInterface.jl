@@ -79,6 +79,7 @@ export cxxprelude
 struct FnName
     julia_name::JuliaName
     cxx_name::CxxName
+    cxx_library::CxxName
 end
 export FnName
 
@@ -98,17 +99,23 @@ struct FnArg
     cxx_type::CxxType
     initial_julia_type::Type
     convert_from_initial::Any
+    skip::Bool
+    function FnArg(julia_name::JuliaName, julia_type::Type, cxx_name::CxxName, cxx_type::CxxType, initial_julia_type::Type,
+                   convert_from_initial::Any; skip::Bool=false)
+        return new(julia_name, julia_type, cxx_name, cxx_type, initial_julia_type, convert_from_initial, skip)
+    end
 end
 export FnArg
-function FnArg(julia_name::JuliaName, julia_type::Type, cxx_name::CxxName, cxx_type::CxxType)
-    return FnArg(julia_name, julia_type, cxx_name, cxx_type, julia_type, identity)
+function FnArg(julia_name::JuliaName, julia_type::Type, cxx_name::CxxName, cxx_type::CxxType; skip::Bool=false)
+    return FnArg(julia_name, julia_type, cxx_name, cxx_type, julia_type, identity; skip=skip)
 end
 
 function cxxfunction(name::FnName, result::FnResult, arguments::AbstractVector{FnArg}, cxx_stmts::AbstractString)
     julia_code = quote
         function $(name.julia_name)($([:($(arg.julia_name)::$(arg.initial_julia_type)) for arg in arguments]...))
-            res = ccall($(name.cxx_name), $(result.julia_type), ($([arg.julia_type for arg in arguments]...),),
-                        $([arg.convert_from_initial(arg.julia_name) for arg in arguments]...))
+            res = ccall(($(name.cxx_name), $(name.cxx_library)), $(result.julia_type),
+                        ($([arg.julia_type for arg in arguments if !arg.skip]...),),
+                        $([arg.convert_from_initial(arg.julia_name) for arg in arguments if !arg.skip]...))
             return $(result.convert_to_final(:res))::$(result.final_julia_type)
         end
     end
@@ -117,12 +124,11 @@ function cxxfunction(name::FnName, result::FnResult, arguments::AbstractVector{F
     global iobuffer
     if iobuffer ≢ nothing
         cxx_code = """
-
             /*
             $(string(julia_code))
             */
             extern "C" $(result.cxx_type) $(name.cxx_name)(
-                $(join(["$(arg.cxx_type) $(arg.cxx_name)" for arg in arguments], ",\n    "))
+                $(join(["$(arg.cxx_type) $(arg.cxx_name)" for arg in arguments if !arg.skip], ",\n    "))
             ) {
                 $cxx_stmts
             }
