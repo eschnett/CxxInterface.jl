@@ -28,7 +28,7 @@ for T in types
 
     eval(cxxfunction(FnName(Symbol(:StdSharedPtr_new), "std_shared_ptr_$(NT)_new"),
                      FnResult(Ptr{Cvoid}, "std::shared_ptr<$CT> *", StdSharedPtr{T}, expr -> :(StdSharedPtr{$T}($expr))),
-                     [FnArg(:type, Nothing, "type", "std::tuple<>", Type{T}, expr -> nothing)], "return new std::shared_ptr<T>;"))
+                     [FnArg(:type, Nothing, "type", "std::tuple<>", Type{T}, expr -> nothing)], "return new std::shared_ptr<$CT>;"))
 
     eval(cxxfunction(FnName(:StdSharedPtr_delete, "std_shared_ptr_$(NT)_delete"), FnResult(Nothing, "void"),
                      [FnArg(:ptr, Ptr{Cvoid}, "ptr", "std::shared_ptr<$CT> * restrict", StdSharedPtr{T}, identity)], "delete ptr;"))

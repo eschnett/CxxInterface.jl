@@ -28,7 +28,7 @@ for T in types
 
     eval(cxxfunction(FnName(Symbol(:StdVector_new), "std_vector_$(NT)_new"),
                      FnResult(Ptr{Cvoid}, "std::vector<$CT> *", StdVector{T}, expr -> :(StdVector{$T}($expr))),
-                     [FnArg(:type, Nothing, "type", "std::tuple<>", Type{T}, expr -> nothing)], "return new std::vector<T>;"))
+                     [FnArg(:type, Nothing, "type", "std::tuple<>", Type{T}, expr -> nothing)], "return new std::vector<$CT>;"))
 
     eval(cxxfunction(FnName(:StdVector_delete, "std_vector_$(NT)_delete"), FnResult(Nothing, "void"),
                      [FnArg(:vec, Ptr{Cvoid}, "vec", "std::vector<$CT> * restrict", StdVector{T}, identity)], "delete vec;"))

@@ -15,7 +15,7 @@ end
 extern "C" std::vector<int8_t> * std_vector_int8_t_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<int8_t>;
 }
 
 
@@ -83,7 +83,7 @@ end
 extern "C" std::vector<uint8_t> * std_vector_uint8_t_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<uint8_t>;
 }
 
 
@@ -151,7 +151,7 @@ end
 extern "C" std::vector<int8_t> * std_vector_int8_t_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<int8_t>;
 }
 
 
@@ -219,7 +219,7 @@ end
 extern "C" std::vector<int16_t> * std_vector_int16_t_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<int16_t>;
 }
 
 
@@ -287,7 +287,7 @@ end
 extern "C" std::vector<int32_t> * std_vector_int32_t_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<int32_t>;
 }
 
 
@@ -355,7 +355,7 @@ end
 extern "C" std::vector<int64_t> * std_vector_int64_t_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<int64_t>;
 }
 
 
@@ -423,7 +423,7 @@ end
 extern "C" std::vector<uint8_t> * std_vector_uint8_t_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<uint8_t>;
 }
 
 
@@ -491,7 +491,7 @@ end
 extern "C" std::vector<uint16_t> * std_vector_uint16_t_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<uint16_t>;
 }
 
 
@@ -559,7 +559,7 @@ end
 extern "C" std::vector<uint32_t> * std_vector_uint32_t_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<uint32_t>;
 }
 
 
@@ -627,7 +627,7 @@ end
 extern "C" std::vector<uint64_t> * std_vector_uint64_t_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<uint64_t>;
 }
 
 
@@ -695,7 +695,7 @@ end
 extern "C" std::vector<float> * std_vector_float_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<float>;
 }
 
 
@@ -763,7 +763,7 @@ end
 extern "C" std::vector<double> * std_vector_double_new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<double>;
 }
 
 
@@ -831,7 +831,7 @@ end
 extern "C" std::vector<std::complex<float>> * std_vector_std__complex_float__new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<std::complex<float>>;
 }
 
 
@@ -899,7 +899,7 @@ end
 extern "C" std::vector<std::complex<double>> * std_vector_std__complex_double__new(
     std::tuple<> type
 ) {
-    return new std::vector<T>;
+    return new std::vector<std::complex<double>>;
 }
 
 

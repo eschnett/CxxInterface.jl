@@ -15,7 +15,7 @@ end
 extern "C" std::shared_ptr<int8_t> * std_shared_ptr_int8_t_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<int8_t>;
 }
 
 
@@ -81,7 +81,7 @@ end
 extern "C" std::shared_ptr<uint8_t> * std_shared_ptr_uint8_t_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<uint8_t>;
 }
 
 
@@ -147,7 +147,7 @@ end
 extern "C" std::shared_ptr<int8_t> * std_shared_ptr_int8_t_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<int8_t>;
 }
 
 
@@ -213,7 +213,7 @@ end
 extern "C" std::shared_ptr<int16_t> * std_shared_ptr_int16_t_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<int16_t>;
 }
 
 
@@ -279,7 +279,7 @@ end
 extern "C" std::shared_ptr<int32_t> * std_shared_ptr_int32_t_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<int32_t>;
 }
 
 
@@ -345,7 +345,7 @@ end
 extern "C" std::shared_ptr<int64_t> * std_shared_ptr_int64_t_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<int64_t>;
 }
 
 
@@ -411,7 +411,7 @@ end
 extern "C" std::shared_ptr<uint8_t> * std_shared_ptr_uint8_t_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<uint8_t>;
 }
 
 
@@ -477,7 +477,7 @@ end
 extern "C" std::shared_ptr<uint16_t> * std_shared_ptr_uint16_t_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<uint16_t>;
 }
 
 
@@ -543,7 +543,7 @@ end
 extern "C" std::shared_ptr<uint32_t> * std_shared_ptr_uint32_t_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<uint32_t>;
 }
 
 
@@ -609,7 +609,7 @@ end
 extern "C" std::shared_ptr<uint64_t> * std_shared_ptr_uint64_t_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<uint64_t>;
 }
 
 
@@ -675,7 +675,7 @@ end
 extern "C" std::shared_ptr<float> * std_shared_ptr_float_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<float>;
 }
 
 
@@ -741,7 +741,7 @@ end
 extern "C" std::shared_ptr<double> * std_shared_ptr_double_new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<double>;
 }
 
 
@@ -807,7 +807,7 @@ end
 extern "C" std::shared_ptr<std::complex<float>> * std_shared_ptr_std__complex_float__new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<std::complex<float>>;
 }
 
 
@@ -873,7 +873,7 @@ end
 extern "C" std::shared_ptr<std::complex<double>> * std_shared_ptr_std__complex_double__new(
     std::tuple<> type
 ) {
-    return new std::shared_ptr<T>;
+    return new std::shared_ptr<std::complex<double>>;
 }
 
 
