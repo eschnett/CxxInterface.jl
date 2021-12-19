@@ -2,8 +2,7 @@ module StdVectors
 
 using CxxInterface
 
-const types = Type[Cchar, Cshort, Cint, Clong, Clonglong, Cuchar, Cushort, Cuint, Culong, Culonglong, Cfloat, Cdouble,
-                   Complex{Cfloat}, Complex{Cdouble}]
+const types = Set([Int8, Int16, Int32, Int64, UInt8, UInt16, UInt32, UInt64, Cfloat, Cdouble, Complex{Cfloat}, Complex{Cdouble}])
 
 ################################################################################
 
@@ -23,6 +22,7 @@ end
 Base.cconvert(vec::StdVector) = vec.cxx
 
 for T in types
+    @show T
     CT = cxxtype[T]
     NT = cxxname(CT)
 
