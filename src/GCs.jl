@@ -2,6 +2,8 @@ module GCs
 
 using ComputedFieldTypes
 
+# TODO: Try `@computed mutable struct GC{T} <: supertype(T)`
+
 mutable struct GC{T,ST} <: ST
     managed::T
     function GC{T,ST}() where {T,ST}
