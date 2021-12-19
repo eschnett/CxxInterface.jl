@@ -41,7 +41,7 @@ end
 extern "C" int std_shared_ptr_int8_t_isempty(
     const std::shared_ptr<int8_t> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -54,7 +54,7 @@ end
 extern "C" int8_t std_shared_ptr_int8_t_getindex(
     const std::shared_ptr<int8_t> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -68,7 +68,7 @@ extern "C" void std_shared_ptr_int8_t_setindex_(
     std::shared_ptr<int8_t> * restrict ptr,
     const int8_t& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -107,7 +107,7 @@ end
 extern "C" int std_shared_ptr_int16_t_isempty(
     const std::shared_ptr<int16_t> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -120,7 +120,7 @@ end
 extern "C" int16_t std_shared_ptr_int16_t_getindex(
     const std::shared_ptr<int16_t> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -134,7 +134,7 @@ extern "C" void std_shared_ptr_int16_t_setindex_(
     std::shared_ptr<int16_t> * restrict ptr,
     const int16_t& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -173,7 +173,7 @@ end
 extern "C" int std_shared_ptr_int64_t_isempty(
     const std::shared_ptr<int64_t> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -186,7 +186,7 @@ end
 extern "C" int64_t std_shared_ptr_int64_t_getindex(
     const std::shared_ptr<int64_t> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -200,7 +200,7 @@ extern "C" void std_shared_ptr_int64_t_setindex_(
     std::shared_ptr<int64_t> * restrict ptr,
     const int64_t& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -239,7 +239,7 @@ end
 extern "C" int std_shared_ptr_uint32_t_isempty(
     const std::shared_ptr<uint32_t> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -252,7 +252,7 @@ end
 extern "C" uint32_t std_shared_ptr_uint32_t_getindex(
     const std::shared_ptr<uint32_t> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -266,7 +266,7 @@ extern "C" void std_shared_ptr_uint32_t_setindex_(
     std::shared_ptr<uint32_t> * restrict ptr,
     const uint32_t& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -305,7 +305,7 @@ end
 extern "C" int std_shared_ptr_double_isempty(
     const std::shared_ptr<double> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -318,7 +318,7 @@ end
 extern "C" double std_shared_ptr_double_getindex(
     const std::shared_ptr<double> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -332,7 +332,7 @@ extern "C" void std_shared_ptr_double_setindex_(
     std::shared_ptr<double> * restrict ptr,
     const double& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -371,7 +371,7 @@ end
 extern "C" int std_shared_ptr_int32_t_isempty(
     const std::shared_ptr<int32_t> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -384,7 +384,7 @@ end
 extern "C" int32_t std_shared_ptr_int32_t_getindex(
     const std::shared_ptr<int32_t> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -398,7 +398,7 @@ extern "C" void std_shared_ptr_int32_t_setindex_(
     std::shared_ptr<int32_t> * restrict ptr,
     const int32_t& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -437,7 +437,7 @@ end
 extern "C" int std_shared_ptr_std__complex_float__isempty(
     const std::shared_ptr<std::complex<float>> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -450,7 +450,7 @@ end
 extern "C" std::complex<float> std_shared_ptr_std__complex_float__getindex(
     const std::shared_ptr<std::complex<float>> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -464,7 +464,7 @@ extern "C" void std_shared_ptr_std__complex_float__setindex_(
     std::shared_ptr<std::complex<float>> * restrict ptr,
     const std::complex<float>& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -503,7 +503,7 @@ end
 extern "C" int std_shared_ptr_uint64_t_isempty(
     const std::shared_ptr<uint64_t> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -516,7 +516,7 @@ end
 extern "C" uint64_t std_shared_ptr_uint64_t_getindex(
     const std::shared_ptr<uint64_t> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -530,7 +530,7 @@ extern "C" void std_shared_ptr_uint64_t_setindex_(
     std::shared_ptr<uint64_t> * restrict ptr,
     const uint64_t& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -569,7 +569,7 @@ end
 extern "C" int std_shared_ptr_float_isempty(
     const std::shared_ptr<float> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -582,7 +582,7 @@ end
 extern "C" float std_shared_ptr_float_getindex(
     const std::shared_ptr<float> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -596,7 +596,7 @@ extern "C" void std_shared_ptr_float_setindex_(
     std::shared_ptr<float> * restrict ptr,
     const float& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -635,7 +635,7 @@ end
 extern "C" int std_shared_ptr_std__complex_double__isempty(
     const std::shared_ptr<std::complex<double>> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -648,7 +648,7 @@ end
 extern "C" std::complex<double> std_shared_ptr_std__complex_double__getindex(
     const std::shared_ptr<std::complex<double>> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -662,7 +662,7 @@ extern "C" void std_shared_ptr_std__complex_double__setindex_(
     std::shared_ptr<std::complex<double>> * restrict ptr,
     const std::complex<double>& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -701,7 +701,7 @@ end
 extern "C" int std_shared_ptr_uint8_t_isempty(
     const std::shared_ptr<uint8_t> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -714,7 +714,7 @@ end
 extern "C" uint8_t std_shared_ptr_uint8_t_getindex(
     const std::shared_ptr<uint8_t> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -728,7 +728,7 @@ extern "C" void std_shared_ptr_uint8_t_setindex_(
     std::shared_ptr<uint8_t> * restrict ptr,
     const uint8_t& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 
@@ -767,7 +767,7 @@ end
 extern "C" int std_shared_ptr_uint16_t_isempty(
     const std::shared_ptr<uint16_t> * restrict ptr
 ) {
-    return bool(ptr);
+    return bool(*ptr);
 }
 
 
@@ -780,7 +780,7 @@ end
 extern "C" uint16_t std_shared_ptr_uint16_t_getindex(
     const std::shared_ptr<uint16_t> * restrict ptr
 ) {
-    return *ptr;
+    return **ptr;
 }
 
 
@@ -794,7 +794,7 @@ extern "C" void std_shared_ptr_uint16_t_setindex_(
     std::shared_ptr<uint16_t> * restrict ptr,
     const uint16_t& elt
 ) {
-    *ptr = elt;
+    **ptr = elt;
 }
 
 

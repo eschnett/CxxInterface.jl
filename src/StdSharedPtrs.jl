@@ -35,15 +35,15 @@ for T in types
     eval(cxxfunction(FnName(:(Base.isempty), "std_shared_ptr_$(NT)_isempty"),
                      FnResult(Cint, "int", Bool, expr -> :(convert(Bool, $expr))),
                      [FnArg(:ptr, Ptr{Cvoid}, "ptr", "const std::shared_ptr<$CT> * restrict", StdSharedPtr{T}, identity)],
-                     "return bool(ptr);"))
+                     "return bool(*ptr);"))
 
     eval(cxxfunction(FnName(:(Base.getindex), "std_shared_ptr_$(NT)_getindex"), FnResult(T, CT),
                      [FnArg(:ptr, Ptr{Cvoid}, "ptr", "const std::shared_ptr<$CT> * restrict", StdSharedPtr{T}, identity)],
-                     "return *ptr;"))
+                     "return **ptr;"))
 
     eval(cxxfunction(FnName(:(Base.setindex!), "std_shared_ptr_$(NT)_setindex_"), FnResult(Nothing, "void"),
                      [FnArg(:ptr, Ptr{Cvoid}, "ptr", "std::shared_ptr<$CT> * restrict", StdSharedPtr{T}, identity),
-                      FnArg(:elt, T, "elt", "const $CT&")], "*ptr = elt;"))
+                      FnArg(:elt, T, "elt", "const $CT&")], "**ptr = elt;"))
 end
 
 allocate(::StdSharedPtr{T}) where {T} = StdSharedPtr_new(T)
