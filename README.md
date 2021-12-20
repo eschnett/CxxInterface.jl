@@ -25,7 +25,7 @@ maintenance overhead.
 Let's assume that there is a C++ library `AddIntegers` that provides a
 function
 ```C++
-namespace AI{
+namespace AI {
     int add_int(int x, int y);
 }
 ```
@@ -45,9 +45,9 @@ eval(cxxfunction(FnName(:add_int, "add_int", libAddIntegers),
                  "return AI::add_int(x, y);"))
 ```
 Most arguments to `cxxfunction` come in pairs, defining what happens
-on the Julia side (using symbols and Julia type) as well as what
+on the Julia side (using symbols and Julia types) as well as what
 happens on the C++ side (using strings). In detail:
-- The wrapper function has the name `add_int` both in Julia C++
+- The wrapper function has the name `add_int` both in Julia and C++
 - The first function argument is called `x` in both Julia and C++, and
   has the type `Cint` in Julia and `int` in C++
 - Similarly for the second function argument `y`
@@ -75,6 +75,33 @@ compiler. Ideally, this will happen within a
 [BinaryBuilder](https://binarybuilder.org) build script that then also
 compiles the generated code for multiple architecture into a jll
 package. Presumably, that package would be called `AddIntegers_jll`.
+
+## Generating C++ Code
+
+This code fragment can be used in a Julia script to generate the C++
+code:
+```Julia
+using CxxInterface
+
+println("Generating add_int.cxx...")
+open("add_int.cxx", "w") do file
+    CxxInterface.begin_generate_cxx()
+    include("AddInt.jl")
+    println(file, CxxInterface.end_generate_cxx())
+end
+```
+This script calls `begin_generate_cxx` to switch the CxxInterface.jl
+into C++-generating mode, and then loads the module which executes the
+`cxxfunction` calls therein. Finally, a call to `end_generate_cxx`
+switches out of C++-generating mode and returns a string with all
+generated C++ code.
+
+For convenience, the generated C++ code also contains the generated
+Julia code as comments. This code is not used anywhere, but helps
+understand the generated code.
+
+See the package [STL.jl](https://github.com/eschnett/STL.jl), where
+such a script is used in `deps/build.jl`.
 
 ## Modifying Input and Output types
 
