@@ -151,7 +151,7 @@ for T in types
                      FnResult(T, CT),
                      [FnArg(:x, T, "x", CT),
                       FnArg(:y, T, "y", CT)],
-                     "return a + y;"))
+                     "return x + y;"))
 end
 ```
 This generates a Julia function `add` with four methods, one for each
