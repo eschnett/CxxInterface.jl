@@ -73,8 +73,9 @@ extern "C" int add_int(int x, int y) {
 This C++ code can be written to a file and compiled with a C++
 compiler. Ideally, this will happen within a
 [BinaryBuilder](https://binarybuilder.org) build script that then also
-compiles the generated code for multiple architecture into a jll
-package. Presumably, that package would be called `AddIntegers_jll`.
+compiles the generated code for multiple architecture into a [JLL
+package](https://docs.binarybuilder.org/stable/jll/). Presumably, that
+package would here be called `AddIntegers_jll`.
 
 ## Generating C++ Code
 
