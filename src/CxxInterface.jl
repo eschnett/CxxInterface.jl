@@ -117,6 +117,37 @@ function FnArg(julia_name::JuliaName, julia_type::Type, cxx_name::CxxName, cxx_t
     return FnArg(julia_name, julia_type, cxx_name, cxx_type, julia_type, identity; skip=skip)
 end
 
+const VarName = FnName
+export VarName
+const VarType = FnResult
+export VarType
+
+function cxxvariable(name::VarName, type::VarType, cxx_stmts::AbstractString)
+    julia_code = quote
+        const $(name.julia_name) = begin
+            res = unsafe_load(cglobal(($(name.cxx_name), $(name.cxx_library)), $(type.julia_type)))
+            $(type.convert_to_final(:res))::$(type.final_julia_type)
+        end
+    end
+    julia_code = clean_code(julia_code)
+
+    global iobuffer
+    if iobuffer ≢ nothing
+        cxx_code = """
+            /*
+            $(string(julia_code))
+            */
+            extern "C" const $(type.cxx_type) $(name.cxx_name) = [] { $cxx_stmts }();
+            """
+        quote
+            println($iobuffer, $cxx_code)
+        end
+    else
+        julia_code
+    end
+end
+export cxxvariable
+
 function cxxfunction(name::FnName, result::FnResult, arguments::AbstractVector{FnArg}, cxx_stmts::AbstractString)
     julia_code = quote
         function $(name.julia_name)($([:($(arg.julia_name)::$(arg.initial_julia_type)) for arg in arguments]...))
