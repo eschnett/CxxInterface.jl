@@ -61,9 +61,10 @@ export cxxname
 # C++ complex numbers, because C and C++ behave differently under
 # certain circumstances (e.g. when returned from a function on a
 # 32-bit Intel system).
-const cxxtype = Dict{Type,CxxType}(Int8 => "int8_t", Int16 => "int16_t", Int32 => "int32_t", Int64 => "int64_t", UInt8 => "uint8_t",
-                                   UInt16 => "uint16_t", UInt32 => "uint32_t", UInt64 => "uint64_t", Float32 => "float",
-                                   Float64 => "double", Complex{Float32} => "float _Complex", Complex{Float64} => "double _Complex")
+const cxxtype = Dict{Type,CxxType}(Bool => "uint8_t", Int8 => "int8_t", Int16 => "int16_t", Int32 => "int32_t", Int64 => "int64_t",
+                                   UInt8 => "uint8_t", UInt16 => "uint16_t", UInt32 => "uint32_t", UInt64 => "uint64_t",
+                                   Float32 => "float", Float64 => "double", Complex{Float32} => "float _Complex",
+                                   Complex{Float64} => "double _Complex", Ptr{Cvoid} => "void *")
 export cxxtype
 
 ################################################################################
