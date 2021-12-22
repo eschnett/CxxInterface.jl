@@ -2,26 +2,6 @@ module CxxInterface
 
 ################################################################################
 
-iobuffer = nothing
-
-function begin_generate_cxx()
-    global iobuffer
-    @assert iobuffer ≡ nothing
-    iobuffer = IOBuffer()
-    println(iobuffer, """
-        #include <ccomplex>
-        #include <cstdint>
-        """)
-    return nothing
-end
-function end_generate_cxx()
-    global iobuffer
-    @assert iobuffer ≢ nothing
-    str = String(take!(iobuffer))
-    iobuffer = nothing
-    return str
-end
-
 clean_code(expr) = expr
 function clean_code(expr::Expr)
     expr = Expr(expr.head, map(clean_code, filter(arg -> !(arg isa LineNumberNode), expr.args))...)
@@ -30,8 +10,6 @@ function clean_code(expr::Expr)
     end
     return expr
 end
-
-################################################################################
 
 "Julia identifier"
 const JuliaName = Union{Expr,Symbol}
@@ -70,16 +48,11 @@ export cxxtype
 ################################################################################
 
 function cxxprelude(cxx_stmts::AbstractString)
-    global iobuffer
-    if iobuffer ≢ nothing
-        cxx_code = """
-            $cxx_stmts
-            """
-        quote
-            println($iobuffer, $cxx_code)
-        end
-    else
-        quote end
+    cxx_code = """
+               $cxx_stmts
+               """
+    quote
+        push!(cxx_code, $cxx_code)
     end
 end
 export cxxprelude
@@ -132,19 +105,15 @@ function cxxvariable(name::VarName, type::VarType, cxx_stmts::AbstractString)
     end
     julia_code = clean_code(julia_code)
 
-    global iobuffer
-    if iobuffer ≢ nothing
-        cxx_code = """
-            /*
-            $(string(julia_code))
-            */
-            extern "C" const $(type.cxx_type) $(name.cxx_name) = [] { $cxx_stmts }();
-            """
-        quote
-            println($iobuffer, $cxx_code)
-        end
-    else
-        julia_code
+    cxx_code = """
+        /*
+        $(string(julia_code))
+        */
+        extern "C" const $(type.cxx_type) $(name.cxx_name) = [] { $cxx_stmts }();
+        """
+    quote
+        push!(cxx_code, $cxx_code)
+        $julia_code
     end
 end
 export cxxvariable
@@ -160,23 +129,19 @@ function cxxfunction(name::FnName, result::FnResult, arguments::AbstractVector{F
     end
     julia_code = clean_code(julia_code)
 
-    global iobuffer
-    if iobuffer ≢ nothing
-        cxx_code = """
-            /*
-            $(string(julia_code))
-            */
-            extern "C" $(result.cxx_type) $(name.cxx_name)(
-                $(join(["$(arg.cxx_type) $(arg.cxx_name)" for arg in arguments if !arg.skip], ",\n    "))
-            ) {
-                $cxx_stmts
-            }
-            """
-        quote
-            println($iobuffer, $cxx_code)
-        end
-    else
-        julia_code
+    cxx_code = """
+        /*
+        $(string(julia_code))
+        */
+        extern "C" $(result.cxx_type) $(name.cxx_name)(
+            $(join(["$(arg.cxx_type) $(arg.cxx_name)" for arg in arguments if !arg.skip], ",\n    "))
+        ) {
+            $cxx_stmts
+        }
+        """
+    quote
+        push!(cxx_code, $cxx_code)
+        $julia_code
     end
 end
 export cxxfunction
