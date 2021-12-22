@@ -5,11 +5,13 @@ using Test
 module AddIntegers
 using CxxInterface
 
+const libAddIntegers = joinpath(pwd(), "libAddIntegers")
+
 eval(cxxprelude("""
     #include <cmath>
     """))
 
-eval(cxxfunction(FnName(:add_int, "add_int", "$(pwd())/libAddIntegers"), FnResult(Cint, "int", Int, expr -> :(convert(Int, $expr))),
+eval(cxxfunction(FnName(:add_int, "add_int", libAddIntegers), FnResult(Cint, "int", Int, expr -> :(convert(Int, $expr))),
                  [FnArg(:x, Cint, "x", "int", Integer, identity), FnArg(:y, Cint, "y", "int", Integer, identity)], "return x + y;"))
 end
 
