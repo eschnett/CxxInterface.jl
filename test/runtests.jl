@@ -30,8 +30,8 @@ end
 # Compile C++ code
 # (This fails if there is no C++ compiler available)
 using Libdl: dlext
-run(`c++ $arch -fPIC -c AddIntegers.cxx`)
-run(`c++ $arch -shared -o libAddIntegers.$dlext AddIntegers.o`)
+run(`c++ -fPIC -c AddIntegers.cxx`)
+run(`c++ -shared -o libAddIntegers.$dlext AddIntegers.o`)
 
 # DO NOT call a C++ compiler manually in your own Julia packages. This
 # works only in very controlled environments such as on CI
