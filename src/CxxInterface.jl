@@ -69,7 +69,7 @@ export cxxprelude
 struct FnName
     julia_name::JuliaName
     cxx_name::CxxName
-    cxx_library::CxxName
+    cxx_library::Union{CxxName,Ptr}
 end
 export FnName
 
