@@ -30,8 +30,8 @@ end
 # Compile C++ code
 # (This fails if there is no C++ compiler available)
 run(`c++ -fPIC -c AddIntegers.cxx`)
-dlext = Sys.isapple() ? "dylib" : "so"
-run(`c++ -shared -o libAddIntegers.$dlext AddIntegers.o`)
+dlext = Sys.isapple() ? ".dylib" : Sys.iswindows() ? "" : ".so"
+run(`c++ -shared -o libAddIntegers$dlext AddIntegers.o`)
 run(`pwd`)
 run(`ls -l`)
 
