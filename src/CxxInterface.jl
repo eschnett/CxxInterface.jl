@@ -52,7 +52,16 @@ function cxxprelude(cxx_stmts::AbstractString)
                $cxx_stmts
                """
     quote
-        push!(cxx_code, $cxx_code)
+        const cxx_chunks = String[]
+        function cxx_code()
+            iobuffer = IOBuffer()
+            for chunk in cxx_chunks
+                println(iobuffer, chunk)
+            end
+            return String(take!(iobuffer))
+        end
+
+        push!(cxx_chunks, $cxx_code)
     end
 end
 export cxxprelude
@@ -112,7 +121,7 @@ function cxxvariable(name::VarName, type::VarType, cxx_stmts::AbstractString)
         extern "C" const $(type.cxx_type) $(name.cxx_name) = [] { $cxx_stmts }();
         """
     quote
-        push!(cxx_code, $cxx_code)
+        push!(cxx_chunks, $cxx_code)
         $julia_code
     end
 end
@@ -140,7 +149,7 @@ function cxxfunction(name::FnName, result::FnResult, arguments::AbstractVector{F
         }
         """
     quote
-        push!(cxx_code, $cxx_code)
+        push!(cxx_chunks, $cxx_code)
         $julia_code
     end
 end

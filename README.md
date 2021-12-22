@@ -53,16 +53,14 @@ happens on the C++ side (using strings). In detail:
 - Similarly for the second function argument `y`
 - The C++ wrapper code is given as a string.
 
-When this module is loaded the normal way, it will generate a Julia
-function
+When this module is loaded, it will generate the Julia function
 ```Julia
 function add_int(x::Cint, y::Cint)
     return ccall(("add_int", libAddIntegers), Cint, (Cint, Cint), x, y)
 end
 ```
 
-This module can also be loaded in a special way (see below), and it
-then generates C++ code as a string:
+It will also generate the respective C++ code as a string:
 ```C++
 #include <add_integers.hxx>
 
@@ -84,18 +82,13 @@ code:
 ```Julia
 using CxxInterface
 
+using AddIntegers
+
 println("Generating add_int.cxx...")
 open("add_int.cxx", "w") do file
-    CxxInterface.begin_generate_cxx()
-    include("AddInt.jl")
-    println(file, CxxInterface.end_generate_cxx())
+    println(file, AddIntegers.cxx_code())
 end
 ```
-This script calls `begin_generate_cxx` to switch the CxxInterface.jl
-into C++-generating mode, and then loads the module which executes the
-`cxxfunction` calls therein. Finally, a call to `end_generate_cxx`
-switches out of C++-generating mode and returns a string with all
-generated C++ code.
 
 For convenience, the generated C++ code also contains the generated
 Julia code as comments. This code is not used anywhere, but helps
