@@ -30,8 +30,6 @@ end
 # Compile C++ code
 # (This fails if there is no C++ compiler available)
 using Libdl: dlext
-println("ARCH=$(Sys.ARCH)")
-arch = Sys.ARCH ≡ :i686 ? "-m32" : "-m64"
 run(`c++ $arch -fPIC -c AddIntegers.cxx`)
 run(`c++ $arch -shared -o libAddIntegers.$dlext AddIntegers.o`)
 
@@ -47,7 +45,7 @@ run(`c++ $arch -shared -o libAddIntegers.$dlext AddIntegers.o`)
 # (This fails if the C++ compiler is not compatible with the currently
 # running Julia executable)
 
-# Only test cases where the Github CI environment supports this
-#TODO if Sys.ARCH ≡ :x86_64
+# Only test cases where the Github CI environment supports this (:i686 is not supported)
+if Sys.ARCH ≡ :x86_64
     @test AddIntegers.add_int(2, 3) == 5
-#TODO end
+end
