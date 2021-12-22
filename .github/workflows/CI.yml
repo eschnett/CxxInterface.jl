@@ -70,7 +70,7 @@ jobs:
       - run: |
           julia --project=@. -e '
             using Pkg
-            Pkg.develop("STL")
+            Pkg.develop("https://github.com/eschnett/STL.jl")
             Pkg.test("STL")
           '
       - uses: julia-actions/julia-processcoverage@v1
