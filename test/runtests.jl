@@ -32,6 +32,8 @@ end
 run(`c++ -fPIC -c AddIntegers.cxx`)
 dlext = Sys.isapple() ? "dylib" : "so"
 run(`c++ -shared -o libAddIntegers.$dlext AddIntegers.o`)
+run(`pwd`)
+run(`ls -l`)
 
 # DO NOT call a C++ compiler manually in your own Julia packages. This
 # works only in very controlled environments such as on CI
