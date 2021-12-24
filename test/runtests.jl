@@ -21,6 +21,11 @@ using CxxInterface
 using .AddIntegers
 AddIntegers.cxx_write_code!()
 
+#TODO
+run(`pwd`)
+run(`ls -l`)
+run(`find . -print`)
+
 ################################################################################
 # Compile C++ code
 # (This fails if there is no C++ compiler available)
@@ -28,9 +33,9 @@ using Libdl: dlext
 run(`c++ -fPIC -c AddIntegers.cxx`)
 run(`c++ -shared -o libAddIntegers.$dlext AddIntegers.o`)
 
-# DO NOT call a C++ compiler manually in your own Julia packages. This
-# works only in very controlled environments such as on CI
-# infrastructure. If you do, your package will be fragile, and will
+# Please, DO NOT call a C++ compiler manually in your own Julia
+# packages. This works only in very controlled environments such as on
+# CI infrastructure. If you do, your package will be fragile, and will
 # create lots of headaches for your users in the wild. Instead, use
 # [BinaryBuilder](https://binarybuilder.org) and store your build
 # recipes on [Yggdrasil](https://github.com/JuliaPackaging/Yggdrasil).
