@@ -6,6 +6,7 @@ module AddIntegers
 using CxxInterface
 
 const libAddIntegers = joinpath(pwd(), "libAddIntegers")
+@show libAddIntegers
 
 eval(cxxprelude("AddIntegers.cxx", """
     #include <cmath>
@@ -14,6 +15,8 @@ eval(cxxprelude("AddIntegers.cxx", """
 eval(cxxfunction(FnName(:add_int, "add_int", libAddIntegers), FnResult(Cint, "int", Int, expr -> :(convert(Int, $expr))),
                  [FnArg(:x, Cint, "x", "int", Integer, identity), FnArg(:y, Cint, "y", "int", Integer, identity)], "return x + y;"))
 end
+
+@show AddIntegers.libAddIntegers
 
 ################################################################################
 # Extract C++ code

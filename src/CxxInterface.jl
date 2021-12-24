@@ -51,12 +51,27 @@ if VERSION < v"1.1"
     end
 end
 
+################################################################################
+
 clean_code(expr) = expr
 function clean_code(expr::Expr)
     expr = Expr(expr.head, map(clean_code, filter(arg -> !(arg isa LineNumberNode), expr.args))...)
+    # Remove line numbers.
+    # Line numbers are usually wrong because they point to this file,
+    # instead of the file where the code originates.
     if expr.head ≡ :block && length(expr.args) == 1
         expr = expr.args[1]::Expr
     end
+    return expr
+end
+
+simplify_code(expr) = expr
+function simplify_code(expr::Expr)
+    expr = Expr(expr.head, map(simplify_code, expr.args)...)
+    # Remove the path from the library name in `ccall` expressions.
+    # This makes the Julia code look nicer, and it avoids spurious
+    # changes when generating the code multiple times, but it won't
+    # run correctly any more.
     if expr.head ≡ :call && length(expr.args) ≥ 2 && expr.args[1] ≡ :ccall
         arg1 = expr.args[2]
         if arg1 isa Expr && arg1.head ≡ :tuple && length(arg1.args) ≥ 2
@@ -68,6 +83,8 @@ function clean_code(expr::Expr)
     end
     return expr
 end
+
+################################################################################
 
 "Julia identifier"
 const JuliaName = Union{Expr,Symbol}
@@ -213,10 +230,11 @@ function cxxvariable(name::VarName, type::VarType, cxx_stmts::AbstractString)
         end
     end
     julia_code = clean_code(julia_code)
+    simple_julia_code = simplify_code(julia_code)
 
     cxx_code = """
         /*
-        $(string(julia_code))
+        $(string(simple_julia_code))
         */
         extern "C" const $(type.cxx_type) $(name.cxx_name) = [] { $cxx_stmts }();
         """
