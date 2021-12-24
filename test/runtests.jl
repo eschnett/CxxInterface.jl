@@ -33,6 +33,11 @@ using Libdl: dlext
 run(`c++ -fPIC -c AddIntegers.cxx`)
 run(`c++ -shared -o libAddIntegers.$dlext AddIntegers.o`)
 
+#TODO
+run(`pwd`)
+run(`ls -l`)
+run(`find . -print`)
+
 # Please, DO NOT call a C++ compiler manually in your own Julia
 # packages. This works only in very controlled environments such as on
 # CI infrastructure. If you do, your package will be fragile, and will
