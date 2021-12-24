@@ -21,11 +21,6 @@ using CxxInterface
 using .AddIntegers
 AddIntegers.cxx_write_code!()
 
-#TODO
-run(`pwd`)
-run(`ls -l`)
-run(`find . -print`)
-
 ################################################################################
 # Compile C++ code
 # (This fails if there is no C++ compiler available)

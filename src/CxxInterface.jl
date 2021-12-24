@@ -2,6 +2,55 @@ module CxxInterface
 
 ################################################################################
 
+if VERSION < v"1.1"
+    # Taken from Julia Base, version 1.7
+
+    if Sys.isunix()
+        const path_dir_splitter = r"^(.*?)(/+)([^/]*)$"
+
+        splitdrive(path::String) = ("", path)
+    elseif Sys.iswindows()
+        const path_dir_splitter = r"^(.*?)([/\\]+)([^/\\]*)$"
+
+        function splitdrive(path::String)
+            m = match(r"^([^\\]+:|\\\\[^\\]+\\[^\\]+|\\\\\?\\UNC\\[^\\]+\\[^\\]+|\\\\\?\\[^\\]+:|)(.*)$"s, path)
+            return String(m.captures[1]), String(m.captures[2])
+        end
+    else
+        error("path primitives for this OS need to be defined")
+    end
+
+    splitpath(p::AbstractString) = splitpath(String(p))
+    function splitpath(p::String)
+        drive, p = splitdrive(p)
+        out = String[]
+        isempty(p) && (pushfirst!(out, p))  # "" means the current directory.
+        while !isempty(p)
+            dir, base = _splitdir_nodrive(p)
+            dir == p && (pushfirst!(out, dir); break)  # Reached root node.
+            if !isempty(base)  # Skip trailing '/' in basename
+                pushfirst!(out, base)
+            end
+            p = dir
+        end
+        if !isempty(drive)  # Tack the drive back on to the first element.
+            out[1] = drive * out[1]  # Note that length(out) is always >= 1.
+        end
+        return out
+    end
+
+    _splitdir_nodrive(path::String) = _splitdir_nodrive("", path)
+    function _splitdir_nodrive(a::String, b::String)
+        m = match(path_dir_splitter, b)
+        m === nothing && return (a, b)
+        cs = m.captures
+        getcapture(cs, i) = cs[i]::AbstractString
+        c1, c2, c3 = getcapture(cs, 1), getcapture(cs, 2), getcapture(cs, 3)
+        a = string(a, isempty(c1) ? c2[1] : c1)
+        return a, String(c3)
+    end
+end
+
 clean_code(expr) = expr
 function clean_code(expr::Expr)
     expr = Expr(expr.head, map(clean_code, filter(arg -> !(arg isa LineNumberNode), expr.args))...)
