@@ -7,7 +7,8 @@ using CxxInterface
 
 const libAddIntegers = joinpath(pwd(), "libAddIntegers")
 
-eval(cxxprelude("AddIntegers.cxx", """
+eval(cxxsetup())
+eval(cxxnewfile("AddIntegers.cxx", """
     #include <cmath>
     """))
 

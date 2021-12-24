@@ -122,9 +122,43 @@ export cxxtype
 
 ################################################################################
 
-const initialized_modules = Set{Symbol}()
+function cxxsetup()
+    quote
+        const cxx_filename = Ref{AbstractString}("code.cxx")
+        function set_cxx_filename!(filename::AbstractString)
+            return cxx_filename[] = filename
+        end
 
-function cxxprelude(filename::AbstractString, cxx_stmts::AbstractString)
+        const cxx_chunks = Dict{AbstractString,Vector{String}}()
+        function cxx_add_code!(cxx_code::AbstractString)
+            return push!(get!(cxx_chunks, cxx_filename[], String[]), cxx_code)
+        end
+        function cxx_get_code()
+            iobuffer = IOBuffer()
+            allcode = Dict{AbstractString,String}()
+            for (filename, chunks) in cxx_chunks
+                for chunk in chunks
+                    println(iobuffer, chunk)
+                end
+                allcode[filename] = String(take!(iobuffer))
+            end
+            return allcode
+        end
+        function cxx_write_code!()
+            println("Generating C++ code:")
+            allcode = cxx_get_code()
+            for (filename, content) in allcode
+                println("Generating $filename...")
+                write(filename, content)
+            end
+            println("Done.")
+            return nothing
+        end
+    end
+end
+export cxxsetup
+
+function cxxnewfile(filename::AbstractString, cxx_stmts::AbstractString)
     cxx_code = """
                #include <ccomplex>
                #include <cstdint>
@@ -132,46 +166,11 @@ function cxxprelude(filename::AbstractString, cxx_stmts::AbstractString)
                $cxx_stmts
                """
     quote
-        if nameof(@__MODULE__) ∉ CxxInterface.initialized_modules
-            push!(CxxInterface.initialized_modules, nameof(@__MODULE__))
-
-            const cxx_filename = Ref{AbstractString}("code.cxx")
-            function set_cxx_filename!(filename::AbstractString)
-                return cxx_filename[] = filename
-            end
-
-            const cxx_chunks = Dict{AbstractString,Vector{String}}()
-            function cxx_add_code!(cxx_code::AbstractString)
-                return push!(get!(cxx_chunks, cxx_filename[], String[]), cxx_code)
-            end
-            function cxx_get_code()
-                iobuffer = IOBuffer()
-                allcode = Dict{AbstractString,String}()
-                for (filename, chunks) in cxx_chunks
-                    for chunk in chunks
-                        println(iobuffer, chunk)
-                    end
-                    allcode[filename] = String(take!(iobuffer))
-                end
-                return allcode
-            end
-            function cxx_write_code!()
-                println("Generating C++ code:")
-                allcode = cxx_get_code()
-                for (filename, content) in allcode
-                    println("Generating $filename...")
-                    write(filename, content)
-                end
-                println("Done.")
-                return nothing
-            end
-        end
-
         set_cxx_filename!($filename)
         cxx_add_code!($cxx_code)
     end
 end
-export cxxprelude
+export cxxnewfile
 
 function cxxcode(cxx_stmts::AbstractString)
     cxx_code = """
