@@ -8,6 +8,15 @@ function clean_code(expr::Expr)
     if expr.head ≡ :block && length(expr.args) == 1
         expr = expr.args[1]::Expr
     end
+    if expr.head ≡ :call && length(expr.args) ≥ 2 && expr.args[1] ≡ :ccall
+        arg1 = expr.args[2]
+        if arg1 isa Expr && arg1.head ≡ :tuple && length(arg1.args) ≥ 2
+            arg2 = arg1.args[2]
+            if arg2 isa String
+                arg1.args[2] = splitpath(arg2)[end]
+            end
+        end
+    end
     return expr
 end
 
@@ -47,24 +56,66 @@ export cxxtype
 
 ################################################################################
 
-function cxxprelude(cxx_stmts::AbstractString)
+const initialized_modules = Set{Symbol}()
+
+function cxxprelude(filename::AbstractString, cxx_stmts::AbstractString)
+    cxx_code = """
+               #include <ccomplex>
+               #include <cstdint>
+
+               $cxx_stmts
+               """
+    quote
+        if nameof(@__MODULE__) ∉ CxxInterface.initialized_modules
+            push!(CxxInterface.initialized_modules, nameof(@__MODULE__))
+
+            const cxx_filename = Ref{AbstractString}("code.cxx")
+            function set_cxx_filename!(filename::AbstractString)
+                return cxx_filename[] = filename
+            end
+
+            const cxx_chunks = Dict{AbstractString,Vector{String}}()
+            function cxx_add_code!(cxx_code::AbstractString)
+                return push!(get!(cxx_chunks, cxx_filename[], String[]), cxx_code)
+            end
+            function cxx_get_code()
+                iobuffer = IOBuffer()
+                allcode = Dict{AbstractString,String}()
+                for (filename, chunks) in cxx_chunks
+                    for chunk in chunks
+                        println(iobuffer, chunk)
+                    end
+                    allcode[filename] = String(take!(iobuffer))
+                end
+                return allcode
+            end
+            function cxx_write_code!()
+                println("Generating C++ code:")
+                allcode = cxx_get_code()
+                for (filename, content) in allcode
+                    println("Generating $filename...")
+                    write(filename, content)
+                end
+                println("Done.")
+                return nothing
+            end
+        end
+
+        set_cxx_filename!($filename)
+        cxx_add_code!($cxx_code)
+    end
+end
+export cxxprelude
+
+function cxxcode(cxx_stmts::AbstractString)
     cxx_code = """
                $cxx_stmts
                """
     quote
-        const cxx_chunks = String[]
-        function cxx_code()
-            iobuffer = IOBuffer()
-            for chunk in cxx_chunks
-                println(iobuffer, chunk)
-            end
-            return String(take!(iobuffer))
-        end
-
-        push!(cxx_chunks, $cxx_code)
+        cxx_add_code!($cxx_code)
     end
 end
-export cxxprelude
+export cxxcode
 
 struct FnName
     julia_name::JuliaName
@@ -121,7 +172,7 @@ function cxxvariable(name::VarName, type::VarType, cxx_stmts::AbstractString)
         extern "C" const $(type.cxx_type) $(name.cxx_name) = [] { $cxx_stmts }();
         """
     quote
-        push!(cxx_chunks, $cxx_code)
+        cxx_add_code!($cxx_code)
         $julia_code
     end
 end
@@ -149,7 +200,7 @@ function cxxfunction(name::FnName, result::FnResult, arguments::AbstractVector{F
         }
         """
     quote
-        push!(cxx_chunks, $cxx_code)
+        cxx_add_code!($cxx_code)
         $julia_code
     end
 end

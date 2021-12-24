@@ -7,7 +7,7 @@ using CxxInterface
 
 const libAddIntegers = joinpath(pwd(), "libAddIntegers")
 
-eval(cxxprelude("""
+eval(cxxprelude("AddIntegers.cxx", """
     #include <cmath>
     """))
 
@@ -19,12 +19,7 @@ end
 # Extract C++ code
 using CxxInterface
 using .AddIntegers
-code = AddIntegers.cxx_code()
-@test code isa AbstractString
-open("AddIntegers.cxx", "w") do file
-    println(file, code)
-    return nothing
-end
+AddIntegers.cxx_write_code!()
 
 ################################################################################
 # Compile C++ code

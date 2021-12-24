@@ -36,7 +36,7 @@ that we want to wrap in Julia. This would look as follows:
 using CxxInterface
 using AddIntegers_jll
 
-cxxprelude("""
+cxxprelude("AddIntegers.cxx", """
     #include <add_integers.hxx>
     """)
 
@@ -46,6 +46,11 @@ eval(cxxfunction(FnName(:add_int, "add_int", libAddIntegers),
                   FnArg(:y, Cint, "y", "int")],
                  "return AI::add_int(x, y);"))
 ```
+
+The prelude defines the name of the file that will hold the generated
+C++ code, as well as any C++ statements that are necessary at the
+beginning of that file.
+
 Most arguments to `cxxfunction` come in pairs, defining what happens
 on the Julia side (using symbols and Julia types) as well as what
 happens on the C++ side (using strings). In detail:
@@ -79,17 +84,11 @@ package would here be called `AddIntegers_jll`.
 
 ## Generating C++ Code
 
-This code fragment can be used in a Julia script to generate the C++
+To write the generated C++ code, use
 code:
 ```Julia
-using CxxInterface
-
 using AddIntegers
-
-println("Generating add_int.cxx...")
-open("add_int.cxx", "w") do file
-    println(file, AddIntegers.cxx_code())
-end
+AddIntegers.write_cxx_code!()
 ```
 
 For convenience, the generated C++ code also contains the generated
