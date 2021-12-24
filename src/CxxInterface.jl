@@ -1,5 +1,7 @@
 module CxxInterface
 
+using Libdl
+
 ################################################################################
 
 if VERSION < v"1.1"
@@ -60,7 +62,7 @@ function clean_code(expr::Expr)
     # Line numbers are usually wrong because they point to this file,
     # instead of the file where the code originates.
     if expr.head ≡ :block && length(expr.args) == 1
-        expr = expr.args[1]::Expr
+        expr = expr.args[1]
     end
     return expr
 end
@@ -224,8 +226,19 @@ export VarType
 function cxxvariable(name::VarName, type::VarType, cxx_stmts::AbstractString)
     julia_code = quote
         const $(name.julia_name) = begin
-            res = unsafe_load(cglobal(($(name.cxx_name), $(name.cxx_library)), $(type.julia_type)))
-            $(type.convert_to_final(:res))::$(type.final_julia_type)
+            lib = CxxInterface.dlopen($(name.cxx_library))
+            sym = CxxInterface.dlsym(lib, $(name.cxx_name); throw_error=false)
+            if sym ≡ nothing
+                libname = $(name.cxx_library)
+                symname = $(name.cxx_name)
+                println("Load error (library \"$libname\", symbol \"$symname\"). You can ignore this error when generating C++ code.")
+                nothing
+            else
+                # ptr = cglobal(($(name.cxx_name), $(name.cxx_library)), $(type.julia_type))
+                ptr = cglobal(sym, $(type.julia_type))
+                res = unsafe_load(ptr)
+                $(type.convert_to_final(:res))::$(type.final_julia_type)
+            end
         end
     end
     julia_code = clean_code(julia_code)
