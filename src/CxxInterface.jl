@@ -267,10 +267,11 @@ function cxxfunction(name::FnName, result::FnResult, arguments::AbstractVector{F
         end
     end
     julia_code = clean_code(julia_code)
+    simple_julia_code = simplify_code(julia_code)
 
     cxx_code = """
         /*
-        $(string(julia_code))
+        $(string(simple_julia_code))
         */
         extern "C" $(result.cxx_type) $(name.cxx_name)(
             $(join(["$(arg.cxx_type) $(arg.cxx_name)" for arg in arguments if !arg.skip], ",\n    "))
