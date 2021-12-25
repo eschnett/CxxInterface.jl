@@ -2,17 +2,13 @@
 
 [![Unit tests](https://github.com/eschnett/CxxInterface.jl/workflows/CI/badge.svg?branch=main)](https://github.com/eschnett/CxxInterface.jl/actions?query=workflow%3A%22CI%22+branch%3Amain)
 
-Successor of [Cxx.jl](https://github.com/JuliaInterop/Cxx.jl) and
+Alternative to [Cxx.jl](https://github.com/JuliaInterop/Cxx.jl) and
 [CxxWrap.jl](https://github.com/JuliaInterop/CxxWrap.jl). Both are
 great libraries. Cxx.jl lets people write C++ code in Julia, whereas
 CxxWrap.jl lets people write Julia code in C++.
 
-Unfortunately, it seems that their architecture requires a significant
-amount of maintenance to keep up with changes in Julia. Neither
-currently (December 2021) support Julia 1.7.
-
-The design of CxxInterface.jl is much simpler than either Cxx.jl or
-CxxWrap.jl. Wrapper functions are written in Julia, and they generate
+The design of CxxInterface.jl is simpler than either Cxx.jl or
+CxxWrap.jl: Wrapper functions are written in Julia, and they generate
 respective C++ wrapper functions via string manipulation that are
 called via
 [`ccall`](https://docs.julialang.org/en/v1/manual/calling-c-and-fortran-code/).
