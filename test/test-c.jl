@@ -22,11 +22,6 @@ AddIntegersC.c_write_code!()
 # Compile C++ code
 # (This fails if there is no C++ compiler available)
 using Libdl: dlext
-run(Cmd(`which c++`; ignorestatus=true))
-run(Cmd(`which cl`; ignorestatus=true))
-run(Cmd(`which cc`; ignorestatus=true))
-run(Cmd(`which gcc`; ignorestatus=true))
-run(Cmd(`ls -l /c/ProgramData/Chocolatey/bin`; ignorestatus=true))
 cc = Sys.iswindows() ? "gcc" : "cc"
 run(`$cc -fPIC -c AddIntegersC.c`)
 run(`$cc -shared -o libAddIntegersC.$dlext AddIntegersC.o`)
