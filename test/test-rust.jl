@@ -8,8 +8,8 @@ const libAddIntegersRust = joinpath(pwd(), "libAddIntegersRust")
 eval(rustsetup())
 eval(rustnewfile("AddIntegersRust.rs", ""))
 
-eval(rustfunction(FnName(:add_int, "add_int", libAddIntegersRust), FnResult(Cint, "i32", Int, expr -> :(convert(Int, $expr))),
-                  [FnArg(:x, Cint, "x", "i32", Integer, identity), FnArg(:y, Cint, "y", "i32", Integer, identity)], "x + y"))
+eval(rustfunction(FnName(:add_int, "add_int", libAddIntegersRust), FnResult(Int32, "i32", Int, expr -> :(convert(Int, $expr))),
+                  [FnArg(:x, Int32, "x", "i32", Integer, identity), FnArg(:y, Int32, "y", "i32", Integer, identity)], "x + y"))
 end
 
 ################################################################################
