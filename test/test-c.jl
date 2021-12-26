@@ -22,6 +22,9 @@ AddIntegersC.c_write_code!()
 # Compile C++ code
 # (This fails if there is no C++ compiler available)
 using Libdl: dlext
+run(`which c++`)
+run(`which cl`)
+run(`which cc`)
 run(`cc -fPIC -c AddIntegersC.c`)
 run(`cc -shared -o libAddIntegersC.$dlext AddIntegersC.o`)
 
