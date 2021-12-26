@@ -25,9 +25,11 @@ using Libdl: dlext
 run(Cmd(`which c++`; ignorestatus=true))
 run(Cmd(`which cl`; ignorestatus=true))
 run(Cmd(`which cc`; ignorestatus=true))
+run(Cmd(`which gcc`; ignorestatus=true))
 run(Cmd(`ls -l /c/ProgramData/Chocolatey/bin`; ignorestatus=true))
-run(`cc -fPIC -c AddIntegersC.c`)
-run(`cc -shared -o libAddIntegersC.$dlext AddIntegersC.o`)
+cc = Sys.iswindows() ? "gcc" : "cc"
+run(`$cc -fPIC -c AddIntegersC.c`)
+run(`$cc -shared -o libAddIntegersC.$dlext AddIntegersC.o`)
 
 # Please, DO NOT call a C++ compiler manually in your own Julia
 # packages. This works only in very controlled environments such as on
