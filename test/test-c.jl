@@ -25,7 +25,7 @@ using Libdl: dlext
 run(Cmd(`which c++`; ignorestatus=true))
 run(Cmd(`which cl`; ignorestatus=true))
 run(Cmd(`which cc`; ignorestatus=true))
-run(Cmd(`ls -l /c/ProgramData/Chocolatey/bin/c++`; ignorestatus=true))
+run(Cmd(`ls -l /c/ProgramData/Chocolatey/bin`; ignorestatus=true))
 run(`cc -fPIC -c AddIntegersC.c`)
 run(`cc -shared -o libAddIntegersC.$dlext AddIntegersC.o`)
 
