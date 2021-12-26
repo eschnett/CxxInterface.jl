@@ -22,7 +22,7 @@ AddIntegersRust.rust_write_code!()
 # Compile Rust code
 # (This fails if there is no Rust compiler available)
 using Libdl: dlext
-run(`rustc --crate-type dylib -o libAddIntegersCxx.$dlext AddIntegersRust.rs`)
+run(`rustc --crate-type dylib -o libAddIntegersRust.$dlext AddIntegersRust.rs`)
 run(`pwd`)
 run(`ls -l`)
 
