@@ -23,8 +23,6 @@ AddIntegersRust.rust_write_code!()
 # (This fails if there is no Rust compiler available)
 using Libdl: dlext
 run(`rustc --crate-type dylib -o libAddIntegersRust.$dlext AddIntegersRust.rs`)
-run(`pwd`)
-run(`ls -l`)
 
 # Please, DO NOT call a Rust compiler manually in your own Julia
 # packages. This works only in very controlled environments such as on
