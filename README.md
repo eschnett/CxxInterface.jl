@@ -1,6 +1,7 @@
 # CxxInterface.jl
 
 [![Unit tests](https://github.com/eschnett/CxxInterface.jl/workflows/CI/badge.svg?branch=main)](https://github.com/eschnett/CxxInterface.jl/actions?query=workflow%3A%22CI%22+branch%3Amain)
+[![codecov](https://codecov.io/gh/eschnett/CxxInterface.jl/branch/main/graph/badge.svg?token=8EXKXPKVBY)](https://codecov.io/gh/eschnett/CxxInterface.jl)
 
 Alternative to [Cxx.jl](https://github.com/JuliaInterop/Cxx.jl) and
 [CxxWrap.jl](https://github.com/JuliaInterop/CxxWrap.jl). Both are
