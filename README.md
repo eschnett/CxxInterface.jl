@@ -19,6 +19,9 @@ compiler and Julia version. The current version of CxxInterface.jl
 should continue to work for later versions of Julia without undue
 maintenance overhead.
 
+This package supports not only C++, but also C, Fortran, and Rust as
+external languages.
+
 ## Example
 
 Let's assume that there is a C++ library `AddIntegers` that provides a
