@@ -2,7 +2,7 @@
 
 function rustsetup()
     quote
-        const rust_filename = Ref{AbstractString}("code.rust")
+        const rust_filename = Ref{AbstractString}("code.rs")
         function set_rust_filename!(filename::AbstractString)
             return rust_filename[] = filename
         end

@@ -168,6 +168,7 @@ export VarType
 include("interface-c.jl")
 include("interface-cxx.jl")
 include("interface-f90.jl")
+include("interface-haskell.jl")
 include("interface-rust.jl")
 
 end
