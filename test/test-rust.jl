@@ -47,6 +47,7 @@ AddIntegersRust.rust_write_code!()
 # (This fails if there is no Rust compiler available)
 using Libdl: dlext
 run(Cmd(`cargo build --release`; dir=joinpath("AddIntegersRust", "add-integers")))
+run(`ls -l AddIntegersRust/add-integers/target/release`)
 cp(joinpath("AddIntegersRust", "add-integers", "target", "release", "libadd_integers_rust.$dlext"), "libadd_integers_rust.$dlext";
    force=true)
 
