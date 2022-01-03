@@ -120,8 +120,7 @@ const cxxtype = Dict{Type,CxxType}(Bool => "uint8_t", Int8 => "int8_t", Int16 =>
                                    UInt8 => "uint8_t", UInt16 => "uint16_t", UInt32 => "uint32_t", UInt64 => "uint64_t",
                                    Float32 => "float", Float64 => "double", Complex{Float32} => "float _Complex",
                                    Complex{Float64} => "double _Complex", Ptr{Cvoid} => "void *", Cvoid => "void",
-                                   Cstring => "char*", Cwstring => "wchar_t*",
-                                  )
+                                   Cstring => "char *", Cwstring => "wchar_t *")
 export cxxtype
 
 ################################################################################

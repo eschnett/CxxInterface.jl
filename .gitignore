@@ -1,4 +1,7 @@
 Manifest.toml
-test/AddIntegers*.*
-test/HaskellRTS.*
-test/libAddIntegers*.*
+test/AddIntegers*
+test/RoundTrip*
+test/HaskellRTS*
+test/libAddIntegers*
+test/libadd_integers*
+test/libRoundTrip*
