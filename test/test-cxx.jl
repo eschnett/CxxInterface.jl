@@ -41,3 +41,30 @@ run(`c++ -shared -o libAddIntegersCxx.$dlext AddIntegersCxx.o`)
 if Sys.ARCH ≡ :x86_64
     @test AddIntegersCxx.add_int(2, 3) == 5
 end
+
+@testset "cxxtype" begin
+    for T in [
+        Cstring,
+        Cuchar,
+        Cuint,
+        Cchar,
+        Cdouble,                   
+        Cfloat,                  
+        Cvoid,
+        Cwchar_t,
+        Cint,                  
+        Cptrdiff_t,
+        Clong,
+        Clonglong,
+        Cssize_t,
+        Culong,
+        Csize_t,    
+        Cshort,    
+        Cwstring,
+        Culonglong,
+        Cushort,
+       ]
+        @test haskey(cxxtype, T)
+    end
+end
+
